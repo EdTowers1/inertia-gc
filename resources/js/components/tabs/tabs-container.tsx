@@ -1,6 +1,8 @@
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { useTabs } from '@/contexts/tabs-context';
+import { ConfirmAlert } from '@/lib/utils/alerts';
 import { cn } from '@/lib/utils';
 import { X } from 'lucide-react';
 
@@ -41,6 +43,8 @@ const tabBorderColors = [
 
 export function TabsContainer() {
     const { tabs, activeTabId, setActiveTab, removeTab } = useTabs();
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [confirmingTabId, setConfirmingTabId] = useState<string | null>(null);
 
     if (tabs.length === 0) {
         return (
@@ -61,7 +65,8 @@ export function TabsContainer() {
     const activeTabIndex = tabs.findIndex((tab) => tab.id === activeTabId);
 
     return (
-        <div className="flex h-full flex-col">
+        <>
+            <div className="flex h-full flex-col">
             {/* Barra de Tabs */}
             <div className="border-b border-sidebar-border/70">
                 <ScrollArea className="w-full">
@@ -103,7 +108,8 @@ export function TabsContainer() {
                                             )}
                                             onClick={(e) => {
                                                 e.stopPropagation();
-                                                removeTab(tab.id);
+                                                setConfirmingTabId(tab.id);
+                                                setIsConfirmOpen(true);
                                             }}
                                         >
                                             <X className="h-3 w-3" />
@@ -143,5 +149,23 @@ export function TabsContainer() {
                 )}
             </div>
         </div>
+            <ConfirmAlert
+                open={isConfirmOpen}
+                onOpenChange={(open) => {
+                    setIsConfirmOpen(open);
+                    if (!open) setConfirmingTabId(null);
+                }}
+                onConfirm={() => {
+                    if (confirmingTabId) {
+                        removeTab(confirmingTabId);
+                    }
+                    setIsConfirmOpen(false);
+                }}
+                title="Cerrar pestaña"
+                description="¿Estás seguro que quieres cerrar esta pestaña?"
+                confirmText="Sí, cerrar"
+                cancelText="Cancelar"
+            />
+        </>
     );
 }
