@@ -1,7 +1,7 @@
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Icon } from '@/components/icon';
-import { CilindrosTab } from '@/components/tabs/cilindros-tab';
-import { ClientesTab } from '@/components/tabs/clientes-tab';
+import { CilindrosTab } from '@/pages/cilindros/cilindros-tab';
+import { ClientesTab } from '@/pages/clientes/clientes-tab';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -123,7 +123,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
     return (
         <>
             <div className="border-b border-sidebar-border/80">
-                <div className="mx-auto flex h-14 items-center px-4 md:max-w-7xl">
+                    <div className="mx-auto flex h-14 items-center px-4 lg:px-8 md:max-w-full">
                     {/* Mobile Menu */}
                     <div className="lg:hidden">
                         <Sheet>
@@ -158,7 +158,12 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                                                             e,
                                                         )
                                                     }
-                                                    className="flex items-center space-x-2 text-left font-medium"
+                                                    className={cn(
+                                                        'flex items-center space-x-2 text-left font-medium',
+                                                        page.url === item.href
+                                                            ? activeItemStyles
+                                                            : '',
+                                                    )}
                                                 >
                                                     {item.icon && (
                                                         <Icon
@@ -220,6 +225,9 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                                             className={cn(
                                                 navigationMenuTriggerStyle(),
                                                 'h-9 cursor-pointer px-3',
+                                                page.url === item.href
+                                                    ? activeItemStyles
+                                                    : '',
                                             )}
                                         >
                                             {item.icon && (
@@ -304,7 +312,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
             </div>
             {breadcrumbs.length > 1 && (
                 <div className="flex w-full border-b border-sidebar-border/70">
-                    <div className="mx-auto flex h-12 w-full items-center justify-start px-4 text-neutral-500 md:max-w-7xl">
+                    <div className="mx-auto flex h-12 w-full items-center justify-start px-4 lg:px-8 text-neutral-500 md:max-w-full">
                         <Breadcrumbs breadcrumbs={breadcrumbs} />
                     </div>
                 </div>

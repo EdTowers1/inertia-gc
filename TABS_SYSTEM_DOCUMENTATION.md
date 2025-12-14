@@ -15,8 +15,11 @@ resources/js/
 ├── components/
 │   └── tabs/
 │       ├── tabs-container.tsx    # Contenedor principal con barra de tabs y contenido
-│       ├── clientes-tab.tsx      # Componente de contenido para Clientes
-│       └── cilindros-tab.tsx     # Componente de contenido para Cilindros
+├── pages/
+│   ├── clientes/
+│   │   └── clientes-tab.tsx      # Componente de contenido para Clientes
+│   ├── cilindros/
+│   │   └── cilindros-tab.tsx     # Componente de contenido para Cilindros
 ├── layouts/
 │   └── app/
 │       └── app-header-layout.tsx # Layout envuelto con TabsProvider
@@ -78,8 +81,8 @@ Componente visual que muestra:
 
 ### 3. Componentes de Contenido
 
-**Clientes**: `resources/js/components/tabs/clientes-tab.tsx`
-**Cilindros**: `resources/js/components/tabs/cilindros-tab.tsx`
+**Clientes**: `resources/js/pages/clientes/clientes-tab.tsx`
+**Cilindros**: `resources/js/pages/cilindros/cilindros-tab.tsx`
 
 Cada componente contiene el contenido específico de su tab.
 
@@ -90,7 +93,7 @@ Cada componente contiene el contenido específico de su tab.
 ```typescript
 import { useTabs } from '@/contexts/tabs-context';
 import { Users } from 'lucide-react';
-import { ClientesTab } from '@/components/tabs/clientes-tab';
+import { ClientesTab } from '@/pages/clientes/clientes-tab';
 
 function MiComponente() {
     const { addTab } = useTabs();
@@ -145,7 +148,7 @@ const handleNavItemClick = (item: NavItem, e: React.MouseEvent) => {
 ### Paso 1: Crear el componente de contenido
 
 ```tsx
-// resources/js/components/tabs/mi-nueva-tab.tsx
+// resources/js/pages/mi-nueva-tab/mi-nueva-tab.tsx
 export function MiNuevaTab() {
     return (
         <div className="h-full space-y-4">
@@ -199,7 +202,7 @@ const getTabComponent = (title: string) => {
 
 ```tsx
 import { useTabs } from '@/contexts/tabs-context';
-import { MiNuevaTab } from '@/components/tabs/mi-nueva-tab';
+import { MiNuevaTab } from '@/pages/mi-nueva-tab/mi-nueva-tab';
 
 function AlgunComponente() {
     const { addTab } = useTabs();

@@ -59,9 +59,11 @@ resources/js/
 ├── components/
 │   └── tabs/
 │       ├── tabs-container.tsx        # UI de las tabs
-│       ├── clientes-tab.tsx          # Contenido Clientes
-│       └── cilindros-tab.tsx         # Contenido Cilindros
 └── pages/
+    ├── clientes/
+    │   └── clientes-tab.tsx         # Contenido Clientes
+    ├── cilindros/
+    │   └── cilindros-tab.tsx        # Contenido Cilindros
     └── dashboard.tsx                 # Dashboard con tabs
 ```
 
@@ -70,7 +72,7 @@ resources/js/
 1. **Crear componente de contenido**
 
 ```tsx
-// resources/js/components/tabs/mi-nueva-tab.tsx
+// resources/js/pages/mi-nueva-tab/mi-nueva-tab.tsx
 export function MiNuevaTab() {
     return <div>Mi contenido</div>;
 }

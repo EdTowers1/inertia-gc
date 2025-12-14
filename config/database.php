@@ -83,6 +83,27 @@ return [
             ]) : [],
         ],
 
+        // External MariaDB connection (use when connecting to an external DB)
+        'external_mariadb' => [
+            'driver' => 'mariadb',
+            'url' => env('DB_EXTERNAL_URL'),
+            'host' => env('DB_EXTERNAL_HOST', env('DB_HOST', '127.0.0.1')),
+            'port' => env('DB_EXTERNAL_PORT', env('DB_PORT', '3306')),
+            'database' => env('DB_EXTERNAL_DATABASE', env('DB_DATABASE', 'laravel')),
+            'username' => env('DB_EXTERNAL_USERNAME', env('DB_USERNAME', 'root')),
+            'password' => env('DB_EXTERNAL_PASSWORD', env('DB_PASSWORD', '')),
+            'unix_socket' => env('DB_EXTERNAL_SOCKET', env('DB_SOCKET', '')),
+            'charset' => env('DB_EXTERNAL_CHARSET', env('DB_CHARSET', 'utf8mb4')),
+            'collation' => env('DB_EXTERNAL_COLLATION', env('DB_COLLATION', 'utf8mb4_unicode_ci')),
+            'prefix' => env('DB_EXTERNAL_PREFIX', ''),
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                (PHP_VERSION_ID >= 80500 ? \Pdo\Mysql::ATTR_SSL_CA : \PDO::MYSQL_ATTR_SSL_CA) => env('DB_EXTERNAL_MYSQL_ATTR_SSL_CA', env('MYSQL_ATTR_SSL_CA')),
+            ]) : [],
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DB_URL'),

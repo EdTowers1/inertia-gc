@@ -68,7 +68,7 @@ export function TabsContainer() {
         <>
             <div className="flex h-full flex-col">
             {/* Barra de Tabs */}
-            <div className="border-b border-sidebar-border/70">
+            <div className=" border-sidebar-border/70">
                 <ScrollArea className="w-full">
                     <div className="flex items-center">
                         {tabs.map((tab, index) => {

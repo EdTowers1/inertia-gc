@@ -5,8 +5,8 @@
  * en diferentes escenarios.
  */
 
-import { CilindrosTab } from '@/components/tabs/cilindros-tab';
-import { ClientesTab } from '@/components/tabs/clientes-tab';
+import { CilindrosTab } from '@/pages/cilindros/cilindros-tab';
+import { ClientesTab } from '@/pages/clientes/clientes-tab';
 import { Button } from '@/components/ui/button';
 import { useTabs } from '@/contexts/tabs-context';
 import { Cylinder, Plus, Users, X } from 'lucide-react';
@@ -269,7 +269,7 @@ export function EjemploVerificarTab() {
 
 function TabConDatos() {
     const [loading, setLoading] = React.useState(true);
-    const [datos, setDatos] = React.useState<any[]>([]);
+    const [datos, setDatos] = React.useState<ClienteDetalle[]>([]);
 
     React.useEffect(() => {
         // Simular fetch de datos
