@@ -6,33 +6,28 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Clase extends Model
+class Grupo extends Model
 {
     use HasFactory, SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'codigo',
         'nombre',
+        'nombre_corto',
+        'nombre_sticker',
+        'dias_rotacion',
         'is_inactive',
+        'clase_id',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
     protected $casts = [
         'is_inactive' => 'boolean',
+        'dias_rotacion' => 'float',
         'deleted_at' => 'datetime',
     ];
 
-    public function grupos()
+    public function clase()
     {
-        return $this->hasMany(Grupo::class);
+        return $this->belongsTo(Clase::class);
     }
 }
