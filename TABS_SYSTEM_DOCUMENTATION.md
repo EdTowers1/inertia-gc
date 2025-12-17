@@ -46,26 +46,28 @@ resources/js/
 Proporciona el estado global de las tabs a toda la aplicación.
 
 **Estado:**
+
 ```typescript
 interface Tab {
-    id: string;              // ID único de la tab
-    title: string;           // Título mostrado
-    icon?: Component;        // Icono (opcional)
-    component: ReactNode;    // Contenido de la tab
-    closeable?: boolean;     // Si se puede cerrar (default: true)
+    id: string; // ID único de la tab
+    title: string; // Título mostrado
+    icon?: Component; // Icono (opcional)
+    component: ReactNode; // Contenido de la tab
+    closeable?: boolean; // Si se puede cerrar (default: true)
 }
 ```
 
 **Funciones disponibles:**
+
 ```typescript
 const {
-    tabs,              // Array de tabs abiertas
-    activeTabId,       // ID de la tab activa
-    addTab,           // Agregar/activar una tab
-    removeTab,        // Cerrar una tab
-    setActiveTab,     // Cambiar tab activa
-    closeAllTabs,     // Cerrar todas las tabs
-    hasTab            // Verificar si existe una tab
+    tabs, // Array de tabs abiertas
+    activeTabId, // ID de la tab activa
+    addTab, // Agregar/activar una tab
+    removeTab, // Cerrar una tab
+    setActiveTab, // Cambiar tab activa
+    closeAllTabs, // Cerrar todas las tabs
+    hasTab, // Verificar si existe una tab
 } = useTabs();
 ```
 
@@ -74,6 +76,7 @@ const {
 **Ubicación**: `resources/js/components/tabs/tabs-container.tsx`
 
 Componente visual que muestra:
+
 - Barra de tabs horizontal con scroll
 - Contenido de la tab activa
 - Botones de cerrar por tab
@@ -115,6 +118,7 @@ function MiComponente() {
 ### Integración con Navbar
 
 El navbar en `app-header.tsx` está configurado para:
+
 1. Interceptar clicks en los items del menú
 2. Navegar al dashboard si no estás ahí
 3. Abrir la tab correspondiente
@@ -168,18 +172,18 @@ Si quieres que aparezca en el navbar, edita `app-header.tsx`:
 const mainNavItems: NavItem[] = [
     {
         title: 'Clientes',
-        href: '/clientes',
+        href: '/dashboard',
         icon: Users,
     },
     {
         title: 'Cilindros',
-        href: '/cilindros',
+        href: '/dashboard',
         icon: Cylinder,
     },
     {
         title: 'Mi Nueva Tab',
         href: '/mi-nueva-tab',
-        icon: MiIcono,  // Importar de lucide-react
+        icon: MiIcono, // Importar de lucide-react
     },
 ];
 
@@ -208,11 +212,15 @@ function AlgunComponente() {
     const { addTab } = useTabs();
 
     return (
-        <button onClick={() => addTab({
-            id: 'mi-nueva-tab',
-            title: 'Mi Nueva Tab',
-            component: <MiNuevaTab />,
-        })}>
+        <button
+            onClick={() =>
+                addTab({
+                    id: 'mi-nueva-tab',
+                    title: 'Mi Nueva Tab',
+                    component: <MiNuevaTab />,
+                })
+            }
+        >
             Abrir Tab
         </button>
     );
@@ -224,6 +232,7 @@ function AlgunComponente() {
 ### Estilos de las Tabs
 
 Edita `tabs-container.tsx` para modificar:
+
 - Altura de la barra de tabs: `h-10`
 - Colores: `bg-background`, `bg-sidebar/30`
 - Espaciado: `px-4`, `gap-2`
@@ -231,6 +240,7 @@ Edita `tabs-container.tsx` para modificar:
 ### Comportamiento
 
 En `tabs-context.tsx` puedes modificar:
+
 - Prevenir duplicados de tabs
 - Límite máximo de tabs
 - Comportamiento al cerrar la última tab
@@ -245,12 +255,14 @@ En `tabs-context.tsx` puedes modificar:
 ### Las tabs no aparecen
 
 **Verificar**:
+
 1. Que estés en `/dashboard` o hayas incluido `<TabsContainer />` en tu página
 2. Que hayas agregado tabs con `addTab()`
 
 ### La URL cambia al hacer click
 
 **Verificar**:
+
 - Que estés usando `button` y no `Link` en el navbar
 - Que el evento tenga `e.preventDefault()`
 
