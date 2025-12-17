@@ -1,27 +1,57 @@
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
+import { useState } from 'react'
+import { PlaceholderPattern } from '@/components/ui/placeholder-pattern'
+import Toolbar from '@/components/toolbar/toolbar'
+
+type Branch = { id: string | number; name: string }
 
 export function CilindrosTab() {
+    const [branches] = useState<Branch[]>([
+        { id: '1', name: 'Barranquilla' },
+        { id: '2', name: 'Cartagena' },
+        { id: '3', name: 'Medellín' },
+    ])
+
+    const [selectedBranch, setSelectedBranch] = useState<string | number>('1')
+
+    function handleCreate() {
+        // TODO: abrir modal para crear cilindro
+        console.log('crear')
+    }
+
+    function handleRefresh() {
+        // TODO: refrescar lista
+        console.log('refrescar')
+    }
+
+    function handleDelete() {
+        // TODO: eliminar selección
+        console.log('eliminar')
+    }
+
+    function handleSync() {
+        // TODO: sincronizar datos
+        console.log('sincronizar')
+    }
+
     return (
         <div className="h-full space-y-4">
             <div>
-                <h2 className="text-2xl font-bold">Cilindros</h2>
-                <p className="text-sm text-muted-foreground">
-                    Gestión de cilindros de gas
-                </p>
+                <div className="mb-4">
+                    <h1 className="text-xl font-bold">Lista de Cilindros</h1>
+                </div>
+
+                <Toolbar
+                    branches={branches}
+                    selectedBranchId={selectedBranch}
+                    onBranchChange={(id) => setSelectedBranch(id)}
+                    onCreate={handleCreate}
+                    onRefresh={handleRefresh}
+                    onDelete={handleDelete}
+                    onSync={handleSync}
+                />
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2">
-                <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                </div>
-                <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                </div>
-            </div>
 
-            <div className="relative min-h-[50vh] overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-            </div>
         </div>
-    );
+    )
 }
