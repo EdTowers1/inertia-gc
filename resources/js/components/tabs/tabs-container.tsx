@@ -138,7 +138,7 @@ export function TabsContainer() {
                 {activeTab && activeTabIndex !== -1 && (
                     <div
                         className={cn(
-                            'h-full p-4',
+                            'h-full p-2 mt-1 rounded-lg border border-gray-400',
                             tabColors[activeTabIndex % tabColors.length].split(
                                 ' ',
                             )[0] + '/30',

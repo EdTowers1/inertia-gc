@@ -1,4 +1,5 @@
-import { Plus, RefreshCw, Repeat, Trash2 } from 'lucide-react';
+import { type LucideIcon } from 'lucide-react';
+import { ComponentProps, ReactNode } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -8,96 +9,132 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { cn } from '@/lib/utils';
 
 type Branch = { id: string | number; name: string };
 
-interface ToolbarProps {
-    branches?: Branch[];
-    selectedBranchId?: string | number;
-    onBranchChange?: (id: string | number) => void;
-    onCreate?: () => void;
-    onRefresh?: () => void;
-    onDelete?: () => void;
-    onSync?: () => void;
+type ToolbarAction = {
+    key: string;
+    label: string;
+    icon: LucideIcon;
+    onClick?: () => void;
+    variant?: ComponentProps<typeof Button>['variant'];
     className?: string;
+    disabled?: boolean;
+};
+
+interface ToolbarProps {
+    actions?: ToolbarAction[];
+    branches?: Branch[];
+    selectedBranchId?: string | number | null;
+    onBranchChange?: (id: string | number) => void;
+    branchPlaceholder?: string;
+    className?: string;
+    rightSlot?: ReactNode;
 }
 
 export function Toolbar({
+    actions = [],
     branches = [],
     selectedBranchId,
     onBranchChange,
-    onCreate,
-    onRefresh,
-    onDelete,
-    onSync,
+    branchPlaceholder = 'Sucursal',
     className = '',
+    rightSlot,
 }: ToolbarProps) {
+    const hasBranches = branches.length > 0 && onBranchChange;
+    const showRightSide = hasBranches || rightSlot;
+    const showLeftSide = actions.length > 0;
+
+    const handleBranchChange = (value: string) => {
+        const selectedBranch =
+            branches.find((branch) => String(branch.id) === value)?.id ?? value;
+
+        onBranchChange?.(selectedBranch);
+    };
+
     return (
-        <div className={`flex items-center justify-between gap-4 ${className}`}>
-            <div className="flex items-center gap-2">
-                <Button
-                    size="icon"
-                    variant="default"
-                    title="Agregar"
-                    onClick={onCreate}
-                    className="bg-emerald-600 hover:bg-emerald-500"
-                >
-                    <Plus className="size-4 text-white" />
-                </Button>
+        <div
+            className={cn(
+                'flex w-full flex-wrap items-center gap-4',
+                className,
+            )}
+        >
+            {showLeftSide && (
+                <div className="flex shrink-0 items-center gap-2">
+                    {actions.map(
+                        ({
+                            key,
+                            label,
+                            icon: Icon,
+                            onClick,
+                            variant = 'ghost',
+                            className: actionClassName,
+                            disabled,
+                        }) => (
+                            <Button
+                                key={key}
+                                size="icon"
+                                variant={variant}
+                                title={label}
+                                onClick={onClick}
+                                disabled={disabled || !onClick}
+                                className={cn(
+                                    'inline-flex h-8 w-8 items-center justify-center rounded-md',
+                                    actionClassName,
+                                )}
+                            >
+                                <Icon className="size-5" />
+                            </Button>
+                        ),
+                    )}
+                </div>
+            )}
 
-                <Button
-                    size="icon"
-                    variant="ghost"
-                    title="Recargar"
-                    onClick={onRefresh}
-                    className="text-primary"
+            {showRightSide && (
+                <div
+                    className={cn(
+                        'flex items-center gap-2',
+                        showLeftSide ? 'min-w-[12rem] flex-1' : 'w-full',
+                    )}
                 >
-                    <RefreshCw className="size-4" />
-                </Button>
+                    {rightSlot}
 
-                <Button
-                    size="icon"
-                    variant="ghost"
-                    title="Eliminar"
-                    onClick={onDelete}
-                    className="text-destructive"
-                >
-                    <Trash2 className="size-4" />
-                </Button>
+                    {hasBranches && (
+                        <div className="min-w-[12rem] flex-1">
+                            <Select
+                                value={
+                                    selectedBranchId !== undefined &&
+                                    selectedBranchId !== null
+                                        ? String(selectedBranchId)
+                                        : undefined
+                                }
+                                onValueChange={handleBranchChange}
+                            >
+                                <SelectTrigger className="h-8 w-full rounded-md border border-gray-900 bg-white px-2 py-0 text-sm text-gray-700">
+                                    <SelectValue
+                                        placeholder={branchPlaceholder}
+                                    />
+                                </SelectTrigger>
 
-                <Button
-                    size="icon"
-                    variant="ghost"
-                    title="Sincronizar"
-                    onClick={onSync}
-                    className="text-pink-600"
-                >
-                    <Repeat className="size-4" />
-                </Button>
-            </div>
-
-            <div className="w-64">
-                <Select
-                    value={
-                        selectedBranchId ? String(selectedBranchId) : undefined
-                    }
-                    onValueChange={(v) => onBranchChange?.(v)}
-                >
-                    <SelectTrigger>
-                        <SelectValue placeholder="Sucursal" />
-                    </SelectTrigger>
-
-                    <SelectContent>
-                        {branches.map((b) => (
-                            <SelectItem key={String(b.id)} value={String(b.id)}>
-                                {b.name}
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
-                </Select>
-            </div>
+                                <SelectContent>
+                                    {branches.map((branch) => (
+                                        <SelectItem
+                                            key={String(branch.id)}
+                                            value={String(branch.id)}
+                                        >
+                                            {branch.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    )}
+                </div>
+            )}
         </div>
     );
 }
 
+export type { ToolbarAction };
 export default Toolbar;
