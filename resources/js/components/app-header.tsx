@@ -84,8 +84,8 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
         e.preventDefault();
 
         // Navegar al dashboard si no estamos ahí
-        if (page.url !== '/dashboard' && page.url !== '/') {
-            router.visit('/dashboard', {
+        if (page.url !== '/') {
+            router.visit('/', {
                 preserveState: true,
                 preserveScroll: true,
                 onSuccess: () => {
