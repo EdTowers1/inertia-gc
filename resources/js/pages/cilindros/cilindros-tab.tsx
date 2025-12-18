@@ -1,9 +1,10 @@
 import { useCallback, useState } from 'react';
 import { Plus, Repeat, Trash2 } from 'lucide-react';
+import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 
-import Toolbar, { 
-    type ToolbarAction, 
-    type Branch 
+import Toolbar, {
+    type ToolbarAction,
+    type Branch
 } from '@/components/toolbar/toolbar';
 
 /**
@@ -70,8 +71,8 @@ export function CilindrosTab() {
     ];
 
     return (
-        <div className="h-full space-y-4">
-            <div>
+        <div className="flex h-full flex-col gap-4 overflow-hidden">
+            <div className="shrink-0">
                 <div className="mb-2">
                     <h1 className="text-lg font-bold">Lista de Cilindros</h1>
                 </div>
@@ -85,7 +86,11 @@ export function CilindrosTab() {
                 />
             </div>
 
-            {/* TODO: Agregar tabla de cilindros aquí */}
+            <div className="min-h-0 flex-1">
+                <div className="relative h-full overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
+                    <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
+                </div>
+            </div>
         </div>
     );
 }

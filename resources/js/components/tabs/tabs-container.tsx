@@ -67,88 +67,88 @@ export function TabsContainer() {
     return (
         <>
             <div className="flex h-full flex-col">
-            {/* Barra de Tabs */}
-            <div className=" border-sidebar-border/70">
-                <ScrollArea className="w-full">
-                    <div className="flex items-center">
-                        {tabs.map((tab, index) => {
-                            const colorIndex = index % tabColors.length;
-                            const isActive = activeTabId === tab.id;
+                {/* Barra de Tabs */}
+                <div className=" border-sidebar-border/70">
+                    <ScrollArea className="w-full">
+                        <div className="flex items-center">
+                            {tabs.map((tab, index) => {
+                                const colorIndex = index % tabColors.length;
+                                const isActive = activeTabId === tab.id;
 
-                            return (
-                                <div
-                                    key={tab.id}
-                                    className={cn(
-                                        'group relative flex h-10 items-center gap-2 border-r border-sidebar-border/70 px-4 transition-all duration-200',
-                                        isActive
-                                            ? tabColors[colorIndex]
-                                            : tabInactiveColors[colorIndex],
-                                        'cursor-pointer',
-                                    )}
-                                    onClick={() => setActiveTab(tab.id)}
-                                >
-                                    {/* Icono */}
-                                    {tab.icon && (
-                                        <tab.icon className="h-4 w-4 shrink-0" />
-                                    )}
+                                return (
+                                    <div
+                                        key={tab.id}
+                                        className={cn(
+                                            'group relative flex h-10 items-center gap-2 border-r border-sidebar-border/70 px-4 transition-all duration-200',
+                                            isActive
+                                                ? tabColors[colorIndex]
+                                                : tabInactiveColors[colorIndex],
+                                            'cursor-pointer',
+                                        )}
+                                        onClick={() => setActiveTab(tab.id)}
+                                    >
+                                        {/* Icono */}
+                                        {tab.icon && (
+                                            <tab.icon className="h-4 w-4 shrink-0" />
+                                        )}
 
-                                    {/* Título */}
-                                    <span className="text-sm font-medium whitespace-nowrap">
-                                        {tab.title}
-                                    </span>
+                                        {/* Título */}
+                                        <span className="text-sm font-medium whitespace-nowrap">
+                                            {tab.title}
+                                        </span>
 
-                                    {/* Botón cerrar */}
-                                    {tab.closeable && (
-                                        <Button
-                                            variant="ghost"
-                                            size="icon"
-                                            className={cn(
-                                                'ml-2 h-5 w-5 shrink-0 rounded-sm p-0 opacity-70 hover:opacity-100',
-                                                'hover:bg-destructive/10 hover:text-destructive',
-                                            )}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                setConfirmingTabId(tab.id);
-                                                setIsConfirmOpen(true);
-                                            }}
-                                        >
-                                            <X className="h-3 w-3" />
-                                        </Button>
-                                    )}
+                                        {/* Botón cerrar */}
+                                        {tab.closeable && (
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                className={cn(
+                                                    'ml-2 h-5 w-5 shrink-0 rounded-sm p-0 opacity-70 hover:opacity-100',
+                                                    'hover:bg-destructive/10 hover:text-destructive',
+                                                )}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setConfirmingTabId(tab.id);
+                                                    setIsConfirmOpen(true);
+                                                }}
+                                            >
+                                                <X className="h-3 w-3" />
+                                            </Button>
+                                        )}
 
-                                    {/* Indicador de tab activa - Borde inferior de color */}
-                                    {isActive && (
-                                        <div
-                                            className={cn(
-                                                'absolute bottom-0 left-0 h-1 w-full',
-                                                tabBorderColors[colorIndex],
-                                            )}
-                                        />
-                                    )}
-                                </div>
-                            );
-                        })}
-                    </div>
-                    <ScrollBar orientation="horizontal" />
-                </ScrollArea>
+                                        {/* Indicador de tab activa - Borde inferior de color */}
+                                        {isActive && (
+                                            <div
+                                                className={cn(
+                                                    'absolute bottom-0 left-0 h-1 w-full',
+                                                    tabBorderColors[colorIndex],
+                                                )}
+                                            />
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <ScrollBar orientation="horizontal" />
+                    </ScrollArea>
+                </div>
+
+                {/* Contenido de la Tab Activa con color de fondo */}
+                <div className="min-h-0 flex-1 overflow-hidden pt-1">
+                    {activeTab && activeTabIndex !== -1 && (
+                        <div
+                            className={cn(
+                                'flex h-full flex-col overflow-hidden rounded-lg border border-gray-400 p-2',
+                                tabColors[activeTabIndex % tabColors.length].split(
+                                    ' ',
+                                )[0] + '/30',
+                            )}
+                        >
+                            {activeTab.component}
+                        </div>
+                    )}
+                </div>
             </div>
-
-            {/* Contenido de la Tab Activa con color de fondo */}
-            <div className="flex-1 overflow-auto">
-                {activeTab && activeTabIndex !== -1 && (
-                    <div
-                        className={cn(
-                            'h-full p-2 mt-1 rounded-lg border border-gray-400',
-                            tabColors[activeTabIndex % tabColors.length].split(
-                                ' ',
-                            )[0] + '/30',
-                        )}
-                    >
-                        {activeTab.component}
-                    </div>
-                )}
-            </div>
-        </div>
             <ConfirmAlert
                 open={isConfirmOpen}
                 onOpenChange={(open) => {
