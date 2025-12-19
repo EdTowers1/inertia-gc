@@ -25,13 +25,20 @@ class CilindroController extends Controller
         try {
             $cilindros = $this->cilindroService->obtenerListaCilindros($params);
 
-            return response()->json(
-                array_merge(
-                    ['status' => 'success'],
-                    $cilindros
-                ),
-                200
-            );
+            $response = [
+                'status' => 'success',
+                'data' => $cilindros['data'] ?? [],
+                'meta' => [
+                    'current_page' => $cilindros['current_page'] ?? (int)($params['page'] ?? 1),
+                    'last_page' => $cilindros['last_page'] ?? 1,
+                    'per_page' => $cilindros['per_page'] ?? (int)($params['per_page'] ?? 10),
+                    'total' => $cilindros['total'] ?? 0,
+                    'from' => $cilindros['from'] ?? null,
+                    'to' => $cilindros['to'] ?? null,
+                ],
+            ];
+
+            return response()->json($response, 200);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',

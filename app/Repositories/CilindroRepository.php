@@ -28,6 +28,8 @@ class CilindroRepository
         return [
             'data' => $results,
             'total_pages' => (int) $totalPages,
+            'per_page' => $perPage,
+            'page' => $page,
         ];
     }
 }

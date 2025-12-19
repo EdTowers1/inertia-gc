@@ -24,7 +24,7 @@ import { UserMenuContent } from '@/components/user-menu-content';
 import { useTabs } from '@/contexts/tabs-context';
 import { useInitials } from '@/hooks/use-initials';
 import { cn } from '@/lib/utils';
-import { CilindrosTab } from '@/pages/cilindros/cilindros-tab';
+import { CilindrosTab } from '@/pages/cilindros/page';
 import { ClientesTab } from '@/pages/clientes/clientes-tab';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';

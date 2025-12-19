@@ -5,10 +5,10 @@
  * en diferentes escenarios.
  */
 
-import { CilindrosTab } from '@/pages/cilindros/cilindros-tab';
-import { ClientesTab } from '@/pages/clientes/clientes-tab';
 import { Button } from '@/components/ui/button';
 import { useTabs } from '@/contexts/tabs-context';
+import { CilindrosTab } from '@/pages/cilindros/page';
+import { ClientesTab } from '@/pages/clientes/clientes-tab';
 import { Cylinder, Plus, Users, X } from 'lucide-react';
 
 // ============================================================================
